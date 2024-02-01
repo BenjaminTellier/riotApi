@@ -13,8 +13,7 @@ public class Tools {
     public static String changeEndPoint(String endPoint, HashMap<String, String> vars) {
         String finalEndPoint = endPoint;
         for (Map.Entry<String, String> entry : vars.entrySet()) {
-            String regex = "{" + entry.getKey() + "}";
-            finalEndPoint = finalEndPoint.replace(regex, entry.getValue());
+            finalEndPoint = finalEndPoint.replace("{" + entry.getKey() + "}", entry.getValue());
         }
         return finalEndPoint;
     }
