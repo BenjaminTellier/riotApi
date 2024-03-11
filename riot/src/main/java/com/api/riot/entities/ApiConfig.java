@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import lombok.*;
 
 @AllArgsConstructor
-@Entity
 @Data
 @Builder
 public class ApiConfig {

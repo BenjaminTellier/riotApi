@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum EndPoint {
     ACCOUNT_BY_PUUID("/riot/account/v1/accounts/by-puuid/{puuid}"),
-    ACCOUNT_BY_GAMENAME_TAGLINE("/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}");
+    ACCOUNT_BY_GAMENAME_TAGLINE("/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}"),
+    MATCH_HISTORY_BY_PUUID("/lol/match/v5/by-puuid/{puuid}/ids"),
+    MATCH_BY_MATCH_ID("/lol/match/v5/matches/{matchId}");
 
     final String endPoint;
 

@@ -12,18 +12,18 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
 @Data
-@Builder
 public class RiotApi {
 
     private ApiConfig apiConfig;
     private Set<EndPoint> functions;
 
     public RiotApi(ApiConfig apiConfig) {
+        functions = new HashSet();
         this.apiConfig = apiConfig;
         functions.add(EndPoint.ACCOUNT_BY_PUUID);
         functions.add(EndPoint.ACCOUNT_BY_GAMENAME_TAGLINE);
@@ -38,6 +38,32 @@ public class RiotApi {
         String temporaryEndPoint = EndPoint.ACCOUNT_BY_GAMENAME_TAGLINE.getEndPoint();
         String endPoint = Tools.changeEndPoint(temporaryEndPoint, map);
         URI uri =UriComponentsBuilder.fromUriString(apiConfig.getRegionalRouting().hostname+endPoint).queryParam("api_key", apiConfig.getKey()).build().toUri();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .header("X-RapidAPI-Host", String.valueOf(apiConfig.getRegionalRouting().hostname))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = null;
+
+        try {
+            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    public HttpResponse<String> getMatchByMatchId(String matchId) {
+        Objects.requireNonNull(apiConfig);
+
+        HashMap<String, String> map = new HashMap();
+        map.put("matchId", matchId);
+        String temporaryEndPoint = EndPoint.MATCH_BY_MATCH_ID.getEndPoint();
+        String endPoint = Tools.changeEndPoint(temporaryEndPoint, map);
+        URI uri = UriComponentsBuilder.fromUriString(apiConfig.getRegionalRouting().hostname+endPoint).queryParam("api_key", apiConfig.getKey()).build().toUri();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .header("X-RapidAPI-Host", String.valueOf(apiConfig.getRegionalRouting().hostname))
