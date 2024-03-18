@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RiotApplication {
 
 	public static void main(String... args) {
-//		String apiKey = "RGAPI-53f0802b-111f-426f-b973-33f74d3e545d";
+//		String apiKey = "";
 //		ApiConfig apiConfig = ApiConfig.builder().key(apiKey).regionalRouting(RegionalRouting.EUROPE).build();
 //		RiotApi riotApi = new RiotApi(apiConfig);
 //
